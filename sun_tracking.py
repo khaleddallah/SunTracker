@@ -4,6 +4,18 @@ import imutils
 import time
 
 
+def controller_show(xr,yr,mar,image):
+    h,w,_=image.shape
+    cx,cy=(w//2,h//2)
+    if (xr):
+        cv2.rectangle(image,(cx-mar,0),(cx+mar,h),(0,255,0),2)
+    else:
+        cv2.rectangle(image,(cx-mar,0),(cx+mar,h),(0,0,255),1)
+    if (yr):
+        cv2.rectangle(image,(0,cy-mar),(w,cy+mar),(0,255,0),2)
+    else:
+        cv2.rectangle(image,(0,cy-mar),(w,cy+mar),(0,0,255),1)
+
 def controller (ref,cur,mar):
     report=dict()
     #x axis
@@ -71,7 +83,7 @@ def sun_track(image):
 
     #draw hull Rectangle
     x,y,w,h = cv2.boundingRect(cnts[0])
-    cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),2)
+    cv2.rectangle(image,(x,y),(x+w,y+h),(255,0,0),2)
 
     #get center and draw small rectangle in it
     m=cv2.moments(cnts[0])
@@ -92,7 +104,6 @@ def sun_track(image):
 
 
     # show the output image
-    cv2.imshow("Image", image)
     cv2.imshow("thresh", thresh)
 
-    return(ref2,cur2)
+    return(ref2,cur2,image)
